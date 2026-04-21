@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api/quiz",
+  baseURL: "https://financetutorjava.onrender.com/api/quiz",
   timeout: 10000,
 });
 

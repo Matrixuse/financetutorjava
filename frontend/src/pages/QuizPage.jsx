@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  evaluateAnswer,
-  explainTopic,
-  getQuestion,
-} from "../services/api";
+import { evaluateAnswer, explainTopic, getQuestion } from "../services/api";
 
 export default function QuizPage() {
   const didLoadInitialQuestion = useRef(false);
@@ -18,6 +14,7 @@ export default function QuizPage() {
   const [loadingQuestion, setLoadingQuestion] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [explaining, setExplaining] = useState(false);
+  const [level, setLevel] = useState("easy");
 
   const getErrorMessage = (err, fallbackMessage) =>
     err?.response?.data?.message ||
@@ -25,25 +22,14 @@ export default function QuizPage() {
     fallbackMessage;
 
   const loadQuestion = async () => {
-    setLoadingQuestion(true);
-    setError("");
-    setScore("");
-    setFeedback("");
+    setEvaluation("");
     setAnswer("");
 
     try {
-      const res = await getQuestion(difficulty);
-      setQuestion(res.data.question ?? "No question received.");
+      const res = await getQuestion(level);
+      setQuestion(res.data);
     } catch (err) {
-      setQuestion("");
-      setError(
-        getErrorMessage(
-          err,
-          "Unable to load a question. Make sure the backend is running on port 8080."
-        )
-      );
-    } finally {
-      setLoadingQuestion(false);
+      console.error(err);
     }
   };
 
@@ -61,7 +47,7 @@ export default function QuizPage() {
       setFeedback("");
 
       try {
-        const res = await getQuestion(difficulty);
+        const res = await getQuestion(level);
         setQuestion(res.data.question ?? "No question received.");
       } catch (err) {
         setQuestion("");
@@ -156,7 +142,7 @@ export default function QuizPage() {
           <label className="difficulty-label">Select Level: </label>
           <select 
             className="difficulty-select"
-            value={difficulty}
+            value={level}
             onChange={(e) => setDifficulty(e.target.value)}
           >
             <option value="easy">Easy</option>

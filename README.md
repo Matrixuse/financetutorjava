@@ -121,6 +121,8 @@ Runs on:
 
 http://localhost:5173
 🌐 Deployment Notes
+https://financetutor-1.onrender.com/
+
 ⚠️ Important Fixes Done
 ✅ Removed API key from GitHub (security issue)
 ✅ Used Docker for Java deployment

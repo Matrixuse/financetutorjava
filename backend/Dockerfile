@@ -1,13 +1,9 @@
-# Use Java 17
-FROM eclipse-temurin:17-jdk-alpine
+FROM maven:3.9.9-eclipse-temurin-17
 
 WORKDIR /app
 
-# Copy project files
 COPY . .
 
-# Build jar
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Run app
 CMD ["java", "-jar", "target/*.jar"]

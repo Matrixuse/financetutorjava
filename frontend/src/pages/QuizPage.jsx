@@ -54,7 +54,7 @@ export default function QuizPage() {
         setError(
           getErrorMessage(
             err,
-            "Unable to load a question. Make sure the backend is running on port 8080."
+            "Unable to load a question. Make sure the backend is running."
           )
         );
       } finally {

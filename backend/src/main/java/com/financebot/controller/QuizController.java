@@ -5,10 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@CrossOrigin(origins = {
-    "http://localhost:5173",
-    "https://financetutor-1.onrender.com"
-})
 
 @RestController
 @RequestMapping("/api/quiz")

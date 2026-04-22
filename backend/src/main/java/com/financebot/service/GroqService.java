@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.time.Duration;
 import java.util.*;
 
 @Service
@@ -18,7 +19,11 @@ public class GroqService {
     @Value("${groq.api.url}")
     private String apiUrl;
 
-    private final WebClient webClient = WebClient.create();
+    private final WebClient webClient;
+
+    public GroqService(WebClient webClient) {
+        this.webClient = webClient;
+    }
 
     // ✅ EVALUATE ANSWER
     public String evaluateAnswer(String question, String answer) {
@@ -53,7 +58,7 @@ public class GroqService {
                 .bodyValue(body)
                 .retrieve()
                 .bodyToMono(String.class)
-                .block();
+                .block(Duration.ofSeconds(10));
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.readTree(response);
@@ -96,7 +101,7 @@ public class GroqService {
                 .bodyValue(body)
                 .retrieve()
                 .bodyToMono(String.class)
-                .block();
+                .block(Duration.ofSeconds(10));
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.readTree(response);
@@ -138,7 +143,7 @@ public class GroqService {
                 .bodyValue(body)
                 .retrieve()
                 .bodyToMono(String.class)
-                .block();
+                .block(Duration.ofSeconds(10));
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.readTree(response);

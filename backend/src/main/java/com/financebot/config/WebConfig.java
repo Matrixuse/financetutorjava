@@ -35,11 +35,11 @@ public class WebConfig {
     @Bean
     public WebClient webClient() {
         HttpClient httpClient = HttpClient.create()
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000)
-                .responseTimeout(java.time.Duration.ofSeconds(10))
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 20000)
+                .responseTimeout(java.time.Duration.ofSeconds(20))
                 .doOnConnected(conn ->
-                    conn.addHandlerLast(new ReadTimeoutHandler(10, TimeUnit.SECONDS))
-                       .addHandlerLast(new WriteTimeoutHandler(10, TimeUnit.SECONDS))
+                    conn.addHandlerLast(new ReadTimeoutHandler(20, TimeUnit.SECONDS))
+                       .addHandlerLast(new WriteTimeoutHandler(20, TimeUnit.SECONDS))
                 );
 
         return WebClient.builder()
